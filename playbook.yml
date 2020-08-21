@@ -1,0 +1,110 @@
+#!/usr/bin/env ansible-playbook
+- name: Intialize OSX
+  hosts: all
+  connection: local
+  vars:
+    mas_installed_apps:
+    - { id: 497799835, name: "Xcode" }
+    - { id: 803453959, name: "Slack" }
+    homebrew_installed_packages:
+    - coreutils
+    - docker
+    - docker-compose
+    - dockutil
+    - git
+    - rg
+    - rustup
+    - nmap
+    - vim
+    - zsh
+    homebrew_cask_apps:
+    - clion
+    - firefox
+    - goland
+    - google-chrome
+    - little-snitch
+    - micro-snitch
+    - pycharm
+    - visual-studio-code
+    dockitems_to_remove:
+      - Launchpad
+      - Mail
+      - Safari
+      - Contacts
+      - Notes
+      - Reminders
+      - Maps
+      - Photos
+      - Messages
+      - FaceTime
+      - iTunes
+      - iBooks
+      - App Store
+      - System Preferences
+      - Calendar
+      - Siri
+      - TV
+      - News
+      - Books
+      - Podcasts
+      - Music
+    dockitems_to_persist:
+      - name: Google Chrome
+        path: "/Applications/Google Chrome.app"
+        pos: 1
+      - name: Firefox
+        path: "/Applications/Firefox.app"
+        pos: 2
+      - name: Slack
+        path: "/Applications/Slack.app"
+        pos: 3
+      - name: Terminal
+        path: "/System/Applications/Utilities/Terminal.app"
+        pos: 4
+      - name: PyCharm
+        path: "/Applications/PyCharm.app"
+        pos: 5
+      - name: GoLand
+        path: "/Applications/GoLand.app"
+        pos: 6
+      - name: Visual Studio Code
+        path: "/Applications/Visual Studio Code.app/"
+        pos: 7
+  roles:
+  - geerlingguy.homebrew
+  - geerlingguy.mas
+  tasks:
+    - name: Turn off natural scrolling
+      osx_defaults:
+        key: com.apple.swipescrolldirection
+        type: bool
+        value: false
+        state: present
+    - name: Install rustup
+      shell: rustup-init -y
+    - name: Remove garbage from Dock
+      shell: dockutil --remove '{{ item }}'
+      ignore_errors: false
+      with_items: "{{ dockitems_to_remove }}"
+    - name: Check if items in dock exist
+      shell: dockutil --find '{{ item.name }}' || dockutil --add '{{ item.path }}'
+      with_items: "{{ dockitems_to_persist }}"
+    - name: Fix order
+      shell: dockutil --move '{{ item.name }}' --position {{ item.pos }}
+      with_items: "{{ dockitems_to_persist }}"
+    - name: Add homebrew zsh to allowed shells
+      become: yes
+      lineinfile:
+        path: /etc/shells
+        state: present
+        regexp: '^/usr/local/bin/zsh'
+        line: /usr/local/bin/zsh
+    - name: Set zsh as shell
+      shell: chsh -s /usr/local/bin/zsh $USER
+      become: yes
+    - name: Install oh my zsh
+      shell: ls ~/.oh-my-zsh/ || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+    - name: Set zshrc
+      copy:
+        src: zshrc
+        dest: ~/.zshrc
