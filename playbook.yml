@@ -7,11 +7,14 @@
     - { id: 497799835, name: "Xcode" }
     - { id: 803453959, name: "Slack" }
     homebrew_installed_packages:
+    - bash
     - coreutils
     - docker
     - docker-compose
     - dockutil
+    - findutils
     - git
+    - grep
     - rg
     - rustup
     - nmap
@@ -22,9 +25,8 @@
     - firefox
     - goland
     - google-chrome
-    - little-snitch
-    - micro-snitch
     - pycharm
+    - spotify
     - visual-studio-code
     dockitems_to_remove:
       - Launchpad
@@ -58,18 +60,21 @@
       - name: Slack
         path: "/Applications/Slack.app"
         pos: 3
+      - name: Spotify
+        path: "/Applications/Spotify.app"
+        pos: 4
       - name: Terminal
         path: "/System/Applications/Utilities/Terminal.app"
-        pos: 4
+        pos: 5
       - name: PyCharm
         path: "/Applications/PyCharm.app"
-        pos: 5
+        pos: 6
       - name: GoLand
         path: "/Applications/GoLand.app"
-        pos: 6
+        pos: 7
       - name: Visual Studio Code
         path: "/Applications/Visual Studio Code.app/"
-        pos: 7
+        pos: 8
   roles:
   - geerlingguy.homebrew
   - geerlingguy.mas
@@ -99,6 +104,13 @@
         state: present
         regexp: '^/usr/local/bin/zsh'
         line: /usr/local/bin/zsh
+    - name: Add homebrew bash to allowed shells
+      become: yes
+      lineinfile:
+        path: /etc/shells
+        state: present
+        regexp: '^/usr/local/bin/bash'
+        line: /usr/local/bin/bash
     - name: Set zsh as shell
       shell: chsh -s /usr/local/bin/zsh $USER
       become: yes
@@ -108,3 +120,5 @@
       copy:
         src: zshrc
         dest: ~/.zshrc
+        force: yes
+    
