@@ -5,4 +5,4 @@ pyenv install --skip-existing 3.8.5
 python3 -m venv venv
 source venv/bin/activate
 pip install ansible
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install -r osx_requirements.yml

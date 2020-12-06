@@ -1,0 +1,91 @@
+#!/usr/bin/env ansible-playbook
+- name: Set up laptop
+  hosts: all
+  connection: local
+  collections:
+  - community.general.snap
+  tasks:
+    - name: Upgrade the OS
+      apt:
+        upgrade: dist
+      become: true
+    - name: Apt install packages
+      apt:
+        pkg:
+        - aircrack-ng
+        - build-essential
+        - cmake
+        - git
+        - pkg-config
+        - tmux
+        - libfreetype6-dev
+        - libfontconfig1-dev
+        - libssl-dev
+        - libxcb-xfixes0-dev
+        - nmap
+        - python3
+        - tmux
+        - wireshark
+        - vim
+        - virt-manager
+        - zsh
+      become: true
+    - name: Install snaps
+      snap:
+        name:
+          - docker
+          - discord
+          - firefox
+          - signal-desktop
+          - spotify
+      become: true
+    - name: Install snaps without confinement
+      snap:
+        name:
+          - clion
+          - code
+          - datagrip
+          - pycharm-professional
+          - slack
+          - webstorm
+        classic: true
+      become: true
+    - name: Install steam
+      apt:
+        deb: https://cdn.cloudflare.steamstatic.com/client/installer/steam.deb
+      become: true
+    - name: Set shell to zsh
+      shell: chsh -s $(which zsh) stusmall
+      become: yes
+    - name: Set zshrc
+      copy:
+        src: zshrc
+        dest: ~/.zshrc
+        force: yes
+    - name: Set vimrc
+      copy:
+        src: vimrc
+        dest: ~/.vimrc
+        force: yes
+    - name: Install oh my zsh
+      shell: ls ~/.oh-my-zsh/ || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+    - name: Install Rust
+      shell: rustup --help || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    - name: Install Cargo packages
+      shell: ~/.cargo/bin/cargo install alacritty cargo-audit cargo-outdated cargo-update ripgrep tokei
+    - name: Check for updates for already installed Cargo packages
+      shell: ~/.cargo/bin/cargo install-update -a
+    - name: Add Alacritty Icon
+      copy:
+        src: Alacritty.svg
+        dest: /usr/share/pixmaps/Alacritty.svg
+      become: yes
+    - name: Add alacritty desktop file
+      shell: desktop-file-install Alacritty.desktop && update-desktop-database
+      become: yes
+    - name: Set dark theme
+      shell: gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    - name: Enable autohide for dock
+      shell: gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
+    - name: Set Favorite Apps
+      shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'Alacritty.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop', 'datagrip_datagrip.desktop']"
