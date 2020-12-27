@@ -13,17 +13,25 @@
       apt:
         pkg:
         - aircrack-ng
+        - autoconf
         - build-essential
+        - clang
         - cmake
         - git
+        - htop
         - pkg-config
         - tmux
         - libfreetype6-dev
         - libfontconfig1-dev
         - libssl-dev
         - libxcb-xfixes0-dev
+        - meld
         - nmap
+        - nodejs
+        - npm
+        - pipenv
         - python3
+        - synaptic
         - tmux
         - wireshark
         - vim
@@ -38,6 +46,7 @@
           - firefox
           - signal-desktop
           - spotify
+          - zoom-client
       become: true
     - name: Install snaps without confinement
       snap:
@@ -66,6 +75,11 @@
       copy:
         src: vimrc
         dest: ~/.vimrc
+        force: yes
+    - name: Set gitconfig
+      copy:
+        src: gitconfig
+        dest: ~/.gitconfig
         force: yes
     - name: Install oh my zsh
       shell: ls ~/.oh-my-zsh/ || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended

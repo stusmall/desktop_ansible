@@ -1,0 +1,6 @@
+[user]
+    name = "Stuart Small"
+    email = "stuart.alan.small@gmail.com"
+[core]
+    editor = vim
+    compression = 9
