@@ -105,5 +105,9 @@
       shell: gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     - name: Enable autohide for dock
       shell: gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
+    - name: Disable natural scrolling on mouse
+      shell: gsettings set org.gnome.desktop.peripherals.mouse natural-scroll false
+    - name: Disable natural scrolling on touchpad
+      shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
     - name: Set Favorite Apps
       shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'Alacritty.desktop', 'spotify_spotify.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop', 'datagrip_datagrip.desktop']"
