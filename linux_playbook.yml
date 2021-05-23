@@ -12,19 +12,18 @@
     - name: Apt install packages
       apt:
         pkg:
+        - adb
         - aircrack-ng
         - autoconf
         - build-essential
         - clang
         - cmake
+        - docker
+        - docker-compose
         - git
         - htop
         - pkg-config
         - tmux
-        - libfreetype6-dev
-        - libfontconfig1-dev
-        - libssl-dev
-        - libxcb-xfixes0-dev
         - meld
         - nmap
         - nodejs
@@ -32,16 +31,15 @@
         - pipenv
         - python3
         - synaptic
+        - texstudio
         - tmux
         - wireshark
         - vim
-        - virt-manager
         - zsh
       become: true
     - name: Install snaps
       snap:
         name:
-          - docker
           - discord
           - firefox
           - signal-desktop
@@ -54,14 +52,16 @@
           - clion
           - code
           - datagrip
+          - helm
+          - kubectl
           - pycharm-professional
           - slack
           - webstorm
         classic: true
       become: true
-    - name: Install steam
+    - name: Install keybase
       apt:
-        deb: https://cdn.cloudflare.steamstatic.com/client/installer/steam.deb
+        deb: https://prerelease.keybase.io/keybase_amd64.deb
       become: true
     - name: Set shell to zsh
       shell: chsh -s $(which zsh) stusmall
@@ -102,4 +102,4 @@
     - name: Enable autohide for dock
       shell: gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
     - name: Set Favorite Apps
-      shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'Alacritty.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop', 'datagrip_datagrip.desktop']"
+      shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'Alacritty.desktop', 'spotify_spotify.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop', 'datagrip_datagrip.desktop']"
