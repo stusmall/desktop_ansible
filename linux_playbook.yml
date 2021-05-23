@@ -23,13 +23,16 @@
         - docker-compose
         - git
         - htop
-        - pkg-config
-        - tmux
+        - libfreetype6-dev
+        - libfontconfig1-dev
+        - libssl-dev
+        - libxcb-xfixes0-dev
         - meld
         - nmap
         - nodejs
         - npm
         - pipenv
+        - pkg-config
         - python3
         - synaptic
         - texstudio
