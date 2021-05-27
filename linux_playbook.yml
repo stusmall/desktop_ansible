@@ -18,15 +18,17 @@
         - build-essential
         - clang
         - cmake
-        - curl
+        - curl                # Needed to set up rustup
         - docker
         - docker-compose
         - git
+        - gnupg2              # Needed for yubikey smart card
+        - gnupg-agent         # Needed for yubikey smart card
         - htop
-        - libfreetype6-dev
-        - libfontconfig1-dev
-        - libssl-dev
-        - libxcb-xfixes0-dev
+        - libfreetype6-dev    # Needed to build alacritty
+        - libfontconfig1-dev  # Needed to build alacritty
+        - libssl-dev          # Needed to build alacritty
+        - libxcb-xfixes0-dev  # Needed to build alacritty
         - meld
         - nmap
         - nodejs
@@ -34,6 +36,7 @@
         - pipenv
         - pkg-config
         - python3
+        - scdaemon            # Needed for yubikey smart card
         - synaptic
         - texstudio
         - tmux
@@ -62,10 +65,6 @@
           - slack
           - webstorm
         classic: true
-      become: true
-    - name: Install keybase
-      apt:
-        deb: https://prerelease.keybase.io/keybase_amd64.deb
       become: true
     - name: Set shell to zsh
       shell: chsh -s $(which zsh) stusmall
