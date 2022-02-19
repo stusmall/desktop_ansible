@@ -24,15 +24,15 @@
         - git
         - gnupg2              # Needed for yubikey smart card
         - gnupg-agent         # Needed for yubikey smart card
+        - golang
         - htop
         - libfreetype6-dev    # Needed to build alacritty
         - libfontconfig1-dev  # Needed to build alacritty
         - libssl-dev          # Needed to build alacritty
         - libxcb-xfixes0-dev  # Needed to build alacritty
         - meld
+        - net-tools
         - nmap
-        - nodejs
-        - npm
         - pipenv
         - pkg-config
         - python3
@@ -47,6 +47,7 @@
     - name: Install snaps
       snap:
         name:
+          - chromium
           - discord
           - firefox
           - signal-desktop
@@ -56,17 +57,29 @@
     - name: Install snaps without confinement
       snap:
         name:
+          - android-studio
           - aws-cli
           - clion
           - code
           - datagrip
+          - dotnet-sdk
+          - goland
           - helm
+          - intellij-idea-ultimate
           - kubectl
+          - node
           - pycharm-professional
+          - rider
           - slack
           - webstorm
         classic: true
       become: true
+    - name: Install dotnet
+      snap:
+        name:
+          - dotnet-sdk
+        classic: true
+        channel: 3.1/stable
     - name: Set shell to zsh
       shell: chsh -s $(which zsh) stusmall
       become: yes
@@ -109,5 +122,9 @@
       shell: gsettings set org.gnome.desktop.peripherals.mouse natural-scroll false
     - name: Disable natural scrolling on touchpad
       shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+    - name: Disable middle click paste 
+      shell: gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
+    - name: Disable tap to click
+      shell: gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click false
     - name: Set Favorite Apps
-      shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'Alacritty.desktop', 'spotify_spotify.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop', 'datagrip_datagrip.desktop']"
+      shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'Alacritty.desktop', 'spotify_spotify.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop']"
