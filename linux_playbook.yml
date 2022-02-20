@@ -36,6 +36,7 @@
         - pipenv
         - pkg-config
         - python3
+        - python3.9-venv
         - scdaemon            # Needed for yubikey smart card
         - synaptic
         - texstudio
@@ -127,4 +128,6 @@
     - name: Disable tap to click
       shell: gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click false
     - name: Set Favorite Apps
-      shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'Alacritty.desktop', 'spotify_spotify.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop']"
+      shell: gsettings set org.gnome.shell favorite-apps "['firefox_firefox.desktop', 'Alacritty.desktop', 'spotify_spotify.desktop', 'signal-desktop_signal-desktop.desktop', 'slack_slack.desktop', 'clion_clion.desktop', 'pycharm-professional_pycharm-professional.desktop']"
+    - name: Set Default Browser
+      shell: xdg-settings set default-web-browser firefox_firefox.desktop
