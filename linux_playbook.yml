@@ -36,10 +36,11 @@
         - pipenv
         - pkg-config
         - python3
-        - python3.9-venv
+        - python3-venv
         - scdaemon            # Needed for yubikey smart card
         - synaptic
         - texstudio
+        - tree
         - tmux
         - wireshark
         - vim
@@ -52,8 +53,6 @@
           - discord
           - firefox
           - signal-desktop
-          - spotify
-          - zoom-client
       become: true
     - name: Install snaps without confinement
       snap:
@@ -80,7 +79,7 @@
         name:
           - dotnet-sdk
         classic: true
-        channel: 3.1/stable
+        channel: 6.0/stable
     - name: Set shell to zsh
       shell: chsh -s $(which zsh) stusmall
       become: yes
