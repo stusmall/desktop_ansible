@@ -98,6 +98,10 @@
         src: gitconfig
         dest: ~/.gitconfig
         force: yes
+    - name: Create folder for secrets managed outside ansible
+      file:
+        path: ~/.secrets
+        state: directory
     - name: Install oh my zsh
       shell: ls ~/.oh-my-zsh/ || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
     - name: Install Rust
